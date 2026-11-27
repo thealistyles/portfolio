@@ -20,8 +20,12 @@ for r in data['reels']:
     if not video.exists(): print(f'reel {n}: no silent video, skipped'); continue
     vd, speed = dur(video), a.speed
     meta = say(r['vo'], wav, speed)
-    if meta['duration'] + 0.3 > vd - 0.4:  # too long: speed up just enough (cap 1.25)
-        speed = min(1.25, speed * (meta['duration'] + 0.3) / (vd - 0.5)); meta = say(r['vo'], wav, speed)
+    need = meta['duration'] + 0.3 + 0.6  # voice offset + a breath before the end
+    if need > vd:  # keep the natural voice; lengthen the end card and re-render this reel
+        fitf = OUT / 'fit.json'; fit = json.loads(fitf.read_text()) if fitf.exists() else {}
+        fit[str(r['id'])] = round(fit.get(str(r['id']), 0) + need - vd + 0.05, 2); fitf.write_text(json.dumps(fit, indent=1))
+        subprocess.run(['node', 'render.cjs', 'reels', '--only', str(r['id'])], cwd=ROOT, check=True, capture_output=True)
+        vd = dur(video)
     heard = ' '.join(w['text'] for w in meta.get('words', []))
     subprocess.run([sys.executable, str(MOUTH), 'mix', str(video), str(wav), str(OUT / 'final' / f'reel-{n}.mp4'), '--offset', '0.3'], check=True, capture_output=True)
     print(f"reel {n}: video {vd:.1f}s voice {meta['duration']:.1f}s speed {speed:.2f}\n  heard: {heard}")

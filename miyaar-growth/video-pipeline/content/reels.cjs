@@ -84,7 +84,7 @@ const reels = [
    { type: 'card', dur: 6, clip: C(T.done), card: { kind: 'compare', title: 'Which one do you need?', cols: [
      { title: 'Grey structure', price: 'PKR 3,200', lines: ['per sq ft, from', '4 to 5 months', 'Frame, walls, slabs'] },
      { title: 'Turnkey', price: 'PKR 7,500', hi: 1, lines: ['per sq ft, from', '8 to 10 months', 'Move-in ready'] } ] } },
-   CTA('Not sure? ==Ask us.==', 'We will price both for your plot') ],
+   { ...CTA('Not sure? ==Ask us.==', 'We will price both for your plot'), dur: 3.8 } ],
    vo: 'Grey structure or turnkey? Grey structure from three thousand two hundred, done in four to five months. Turnkey from seven thousand five hundred, move-in ready in eight to ten.',
    caption: 'Grey structure (from PKR 3,200/sq ft, 4 to 5 months) gives you the frame, walls and slabs. Turnkey (from PKR 7,500/sq ft, 8 to 10 months) hands you a finished house.\n\nNot sure which you need? We will price both for your plot.' },
 

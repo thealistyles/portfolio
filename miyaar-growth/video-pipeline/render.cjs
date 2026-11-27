@@ -7,6 +7,9 @@ const { reels, posts } = require('./content/reels.cjs');
 const MODE = process.argv[2] || 'all', oi = process.argv.indexOf('--only');
 const ONLY = oi > 0 ? process.argv[oi + 1].split(',').map(Number) : null, FPS = 30, pad = n => String(n).padStart(2, '0');
 const pick = list => list.filter(x => !ONLY || ONLY.includes(x.id));
+// out/fit.json (written by voice/make_voice.py) lengthens a reel's end card so its voiceover fits at natural speed
+const FIT = fs.existsSync(path.join(OUT, 'fit.json')) ? JSON.parse(fs.readFileSync(path.join(OUT, 'fit.json'), 'utf8')) : {};
+for (const r of reels) if (FIT[r.id]) { const last = r.scenes[r.scenes.length - 1]; r.scenes[r.scenes.length - 1] = { ...last, dur: last.dur + FIT[r.id] }; }
 function clipFrames(s) { // extract the frames a clip scene needs, once
   const dir = path.join(CACHE, `${path.basename(s.clip.src, '.mp4')}_${s.clip.from}_${s.dur}`);
   if (!fs.existsSync(path.join(dir, 'done'))) {
