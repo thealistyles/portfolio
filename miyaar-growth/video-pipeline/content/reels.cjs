@@ -93,7 +93,7 @@ const reels = [
    { type: 'clip', dur: 2.6, clip: C(T.paper), text: { at: 'top', h: ['Your BOQ becomes', 'the contract.'], size: 'md' } },
    { type: 'clip', dur: 2.6, clip: C(T.done2), text: { at: 'top', h: ['Handover on the', '==date in writing.=='], size: 'md' } },
    CTA('No extras. ==No surprises.==', 'Fixed-price contract · miyaardevelopers.com') ],
-   vo: 'The final bill matches the quote. Your BOQ becomes the contract. The number you sign is the number you pay, and the handover date is in writing.',
+   vo: 'The final bill matches the quote. Your BOQ becomes the contract. The number you sign is the number you pay, and the handover date is written down.',
    caption: 'The number you sign is the number you pay at handover. Your BOQ becomes the contract, and the schedule is part of the agreement, not a hope.' },
 
  { id: 11, title: 'Handed over in 2024', hook: 'Proof', scenes: [
