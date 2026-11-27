@@ -5,6 +5,32 @@ Golden rule: **talk about their problem, not about us.** Keep first messages und
 
 ---
 
+## 0. 7-day sprint scripts (Sat 28 Nov – Fri 4 Dec)
+
+### 0a. Launch post (WhatsApp status, Facebook, Instagram, LinkedIn)
+> We've launched **Miyaar Developers**! We build websites, Google Business Profiles and WhatsApp automations that bring local businesses more customers. Launch prices for our first 5 clients: a one-page website in 3–5 days from PKR 25k, or a 5-page website in 7 days for PKR 40k ($450 abroad). Message me "WEBSITE" and I'll send a free design idea for your business. Offer ends Friday 4 Dec.
+
+### 0b. Launch post (Roman Urdu)
+> Hum ne **Miyaar Developers** launch kar diya hai! Hum businesses ke liye websites, Google Business Profile aur WhatsApp automation banate hain jo zyada customers laate hain. Pehle 5 clients ke liye launch price: one-page website 3–5 din mein PKR 25k se, ya 5-page website 7 din mein PKR 40k. "WEBSITE" likh kar message karein, hum aap ke business ke liye free design idea bhejenge. Offer Jumma 4 December tak hai.
+
+### 0c. In-person visit (2 minutes, phone in hand)
+1. "Assalam o Alaikum, can I speak to the owner? I'm [name] from Miyaar Developers, a web team here in Lahore. Two minutes?"
+2. Show Google on your phone: "I searched '[service] near [area]'. These [competitors] come up first and get the calls; [Business] [doesn't show / has no website]."
+3. Show a demo site: "This is what we built for a [similar business]. We can do one for you in 7 days, with WhatsApp booking and your Google profile set up."
+4. Price and deadline: "The launch price this week is PKR [X]. It ends Friday."
+5. Close: "Shall I start today? 50% now by JazzCash or bank, the rest when it's live." If not now: "Who decides, and when can I come back?" **Always leave with their WhatsApp number.**
+
+### 0d. Same-day WhatsApp quote
+> [Name], as discussed: [package] for [Business]. Includes: [item 1], [item 2], [item 3]. Live by [date]. Price: PKR [X], launch price until Friday 4 Dec. To start today: [payment details]. Send a screenshot of the payment and we begin right away.
+
+### 0e. Referral ask to anyone who says no
+> No problem at all, thanks for your time. Quick question: do you know 1 or 2 business owners who need a website or more customers? If they sign up, I'll send you [PKR 5,000 / 10%] as a thank-you.
+
+### 0f. Facebook group post (only in groups that allow it)
+> Lahore business owners: this week I'll review 10 business websites or Google profiles for free and send each a 3-minute video with fixes. Comment your business name or link below. — [Name], Miyaar Developers
+
+---
+
 ## 1. Warm network (Week 1)
 
 ### 1a. Friends, family, ex-colleagues, past clients (English)

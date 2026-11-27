@@ -1,10 +1,57 @@
 # Miyaar Developers: 25 Paying Clients in 13 Weeks
 
-**Window:** Mon 30 Nov 2026 → Sun 28 Feb 2027 (13 weeks)
+**Window:** Sat 28 Nov 2026 → Sun 28 Feb 2027 (13 weeks), opening with a **7-day sprint (28 Nov – 4 Dec) that aims for 3 paying clients**
 **Goal:** 25 paying clients. A client counts only once they have signed **and the deposit is in the account.**
 **Rule for now:** everything below is done by hand. We automate only the steps we've done manually at least 20 times (see §10).
 
 > **Assumptions.** Miyaar Developers sells websites and web apps, digital marketing (SMM, SEO, paid ads), and AI automations (n8n). The team has a sales/marketing owner and a developer. miyaardevelopers.com did not load from our test environment, so **check today that the site is live** (open it on mobile data and run it through dnschecker.org). If it's down, fixing that is task #1.
+
+---
+
+## 0. 7-day sprint: first clients by Friday 4 Dec
+
+Aim for **3 paying clients in 7 days** by selling from day 1 to people who already trust you and to Lahore businesses you can meet in person. Cold email and LinkedIn take weeks to warm up, so they wait until week 2. Nobody can guarantee a client in 7 days, but these are the channels that close inside a week.
+
+**Sprint offers: small, fast, easy yes.** Launch prices hold for the first 5 clients or until Fri 4 Dec, whichever comes first.
+
+| Sprint offer | Pakistan | International | Delivered in |
+|---|---|---|---|
+| Google Business Profile setup and optimisation | PKR 8k–15k | $60–100 | 2 days |
+| WhatsApp Business setup, catalogue and auto-replies | PKR 8k–12k | $50–80 | 1 day |
+| One-page website or landing page | PKR 25k–40k | $200–350 | 3–5 days |
+| Launch Site, 5 pages, at launch price | PKR 40k | $450 | 7 days |
+| n8n lead follow-up automation | PKR 25k | $250 | 3 days |
+
+| Channel | Volume in 7 days | Likely clients (approx.) |
+|---|---|---|
+| Warm network: 1:1 WhatsApp messages, not a broadcast | 150 people | 1–2 |
+| Past clients and agencies you've worked with | 25 people | 1 |
+| In-person visits to Lahore businesses with a phone demo | 45 businesses | 1–2 |
+| Cold calls and WhatsApps with a mockup (Google Maps) | 120 businesses | 0–1 |
+| Upwork proposals to small fixed-price jobs | 70 proposals | 0–1 |
+
+**Both of you sell this week.** There is nothing to deliver yet, so the developer makes demos, mockups and Upwork proposals.
+
+| Day | Do this |
+|---|---|
+| Sat 28 Nov | Set the sprint prices, set up WhatsApp Business, make one offer image in Canva, post the launch on WhatsApp status, Facebook, Instagram and LinkedIn. Send 50 personal warm WhatsApps and message 25 past clients and agencies. The developer picks 2 demo sites to show on a phone and sends 10 Upwork proposals. Buy the 2 cold-email domains and start warm-up. |
+| Sun 29 Nov | Send 50 more warm messages and follow up Saturday's. List 100 Lahore businesses on Google Maps with no website or a weak one. The developer makes 5 mockups and sends 10 Upwork proposals. Post a free-audit offer in 5 Facebook business groups that allow it. |
+| Mon 30 Nov | **Field day:** visit 15 businesses in one market area with the phone demo. Send the last 50 warm messages, make 40 cold calls or mockup WhatsApps, send 15 Upwork proposals. |
+| Tue 1 Dec | Hold the calls and meetings that replies booked and send same-day WhatsApp quotes. Visit 15 more businesses, do 40 calls or WhatsApps, send 15 Upwork proposals. |
+| Wed 2 Dec | Second touch to everyone who hasn't replied. Ask everyone who said no for a referral. Visit 15 businesses, do 40 calls or WhatsApps, send 10 Upwork proposals. |
+| Thu 3 Dec | **Closing day:** call every warm lead, remind them the launch price ends Friday, send payment details. Start work the same day payment lands. |
+| Fri 4 Dec | Final follow-ups before Jummah, collect payments, post about your first clients (with their permission), count the week's numbers. |
+| Sat 5 – Sun 6 Dec | Deliver the quick jobs and ask each client for a Google review and 2 referrals. |
+
+**Rules that close deals this week**
+- Quote on WhatsApp the same day: what's included, delivery date and price. No PDF for small jobs.
+- Jobs under PKR 30k or $300 are paid 100% upfront, bigger ones 50%. Take payment on the spot (JazzCash, Easypaisa, bank, Payoneer).
+- Give one option for small jobs; offer three options only from the 5-page site up.
+- Start the day payment lands and deliver early. A fast first delivery is your best advert.
+- Treat every quick job as a door: offer the Launch Site or Lead Engine at handover.
+- Case studies, Fiverr gigs, directory listings and the full website upgrade move to week 2.
+
+Sprint scripts (launch post, in-person visit, same-day quote, referral ask) are in `OUTREACH-SCRIPTS.md` §0.
 
 ---
 
@@ -39,7 +86,7 @@ That blend lands around **~$10k in project fees plus ~$2.5k/month recurring.** T
 
 ---
 
-## 2. Fix the foundation (Week 1, max 5 working days)
+## 2. Fix the foundation (alongside the sprint, finished in week 2)
 
 Don't spend weeks polishing. Each item below gets one day at most.
 
@@ -151,47 +198,38 @@ UAE is 1 hour behind PKT, the UK 5 hours behind and US Eastern 10 hours behind. 
 
 ## 5. 13-week roadmap
 
-### Phase 1: Foundation and fast cash (Weeks 1–2, 30 Nov – 13 Dec), target: 3 clients
+### Phase 1: Sprint and setup (Weeks 1–2, 28 Nov – 13 Dec), target: 5 clients
 
-**Week 1 (30 Nov)**
+**Week 1 (28 Nov – 6 Dec)**
 
-| Day | What to do |
-|---|---|
-| Mon | Lock offers and prices (§2.1), assign owners, set up the tracker |
-| Tue | Fix the website (§2.3), set up Calendly and WhatsApp Business |
-| Wed | Write the 3 case studies, rewrite LinkedIn profiles, set up Upwork + Fiverr |
-| Thu | Build a warm list of 150 people and send the first 50 warm messages |
-| Fri | Buy the outreach domains and start warm-up; build the first niche demo template |
-| Sat | Send the remaining 100 warm messages and the first 15 Upwork proposals |
-
-Week 1 targets: 50+ conversations, 5 calls booked, **1 client.**
+Week 1 is the 7-day sprint in §0. Target: 10 calls or meetings, 6 quotes, **3 clients by Fri 4 Dec.**
 
 **Week 2 (7 Dec)**
 
-- Follow up on every warm message.
-- Start demo-first outreach (25 businesses, 8 with mockups).
-- Send 20 Upwork proposals and 100 LinkedIn requests.
+- Finish the setup the sprint skipped: 3 case studies, Fiverr gigs, Clutch and GoodFirms listings, website upgrade (§2).
+- Keep up local visits, demo-first, Upwork and warm follow-ups.
+- Start LinkedIn (100 requests).
 - Build the list of 60 partner agencies and contact the first 5.
 
-Target: **3 clients cumulative.**
+Target: **5 clients cumulative.**
 
-### Phase 2: Full outreach machine (Weeks 3–6, 14 Dec – 10 Jan), target: 9 cumulative
+### Phase 2: Full outreach machine (Weeks 3–6, 14 Dec – 10 Jan), target: 11 cumulative
 
-- **Week 3 (14 Dec): all channels at full volume (§1).** Cold email goes live at 10/day per inbox, ramping to 25/day. Target: **5.**
-- **Week 4 (21 Dec): Christmas week in the West.** Shift weight to Pakistan, UAE and Upwork. Use the slow days to build next month's lists and record case-study videos. Target: **6.**
-- **Week 5 (28 Dec):** Run a "Start 2027 with a new website — book by 10 Jan" offer. Preload the January email batch. Target: **7.**
-- **Week 6 (4 Jan): Western markets are back with fresh budgets.** Do a big email and LinkedIn push. Run the **first channel review:** hours spent per call booked, by channel. Target: **9.**
+- **Week 3 (14 Dec): all channels at full volume (§1).** Cold email goes live at 10/day per inbox, ramping to 25/day. Target: **7.**
+- **Week 4 (21 Dec): Christmas week in the West.** Shift weight to Pakistan, UAE and Upwork. Use the slow days to build next month's lists and record case-study videos. Target: **8.**
+- **Week 5 (28 Dec):** Run a "Start 2027 with a new website — book by 10 Jan" offer. Preload the January email batch. Target: **9.**
+- **Week 6 (4 Jan): Western markets are back with fresh budgets.** Do a big email and LinkedIn push. Run the **first channel review:** hours spent per call booked, by channel. Target: **11.**
 
-### Phase 3: Double down on what works (Weeks 7–10, 11 Jan – 7 Feb), target: 18 cumulative
+### Phase 3: Double down on what works (Weeks 7–10, 11 Jan – 7 Feb), target: 19 cumulative
 
-- **Week 7:** Cut or fix the weakest channel and move its hours to the top two. Launch the **referral program**: every past and current client gets 10% of the first project, or a free month of care, per referral. Target: **11.**
-- **Week 8:** Upsell every Launch Site client the Lead Engine or Retainer. Launch a **Ramadan / Eid campaign offer** for Pakistani e-commerce, restaurants and retail. They plan Eid campaigns now (Ramadan is expected to start around 8 Feb 2027). Target: **13.**
-- **Week 9:** Collect video testimonials and run the second follow-up round with partner agencies. Target: **15.**
-- **Week 10:** Push open local deals to close **before Ramadan.** Target: **18.**
+- **Week 7:** Cut or fix the weakest channel and move its hours to the top two. Launch the **referral program**: every past and current client gets 10% of the first project, or a free month of care, per referral. Target: **13.**
+- **Week 8:** Upsell every Launch Site client the Lead Engine or Retainer. Launch a **Ramadan / Eid campaign offer** for Pakistani e-commerce, restaurants and retail. They plan Eid campaigns now (Ramadan is expected to start around 8 Feb 2027). Target: **15.**
+- **Week 9:** Collect video testimonials and run the second follow-up round with partner agencies. Target: **17.**
+- **Week 10:** Push open local deals to close **before Ramadan.** Target: **19.**
 
 ### Phase 4: Close and systemise (Weeks 11–13, 8 Feb – 28 Feb), target: 25
 
-- **Week 11:** Ramadan starts (expected). Hold local calls late morning or after iftar; international channels carry the volume. Every open proposal gets a decision date. Target: **20.**
+- **Week 11:** Ramadan starts (expected). Hold local calls late morning or after iftar; international channels carry the volume. Every open proposal gets a decision date. Target: **21.**
 - **Week 12:** Final push on the pipeline. Use honest scarcity ("we can take 3 more projects in February") only if delivery capacity really is limited. Target: **23.**
 - **Week 13:** Close the remaining deals. Write an SOP for every repeated step; these become the automation spec (§10). Plan the next quarter. Target: **25.**
 
