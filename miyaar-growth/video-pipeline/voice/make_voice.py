@@ -2,6 +2,7 @@
 """Voices every reel with Kokoro (voice/mouth.py), fits the voice to the video, mixes it, and writes captions.txt.
 usage: python3 voice/make_voice.py [--voice am_michael] [--only 1,4]"""
 import argparse, json, re, subprocess, sys
+sys.stdout.reconfigure(line_buffering=True)
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent; OUT = ROOT / 'out'; MOUTH = ROOT / 'voice' / 'mouth.py'
 ap = argparse.ArgumentParser(); ap.add_argument('--voice', default='am_michael'); ap.add_argument('--speed', type=float, default=1.05)
@@ -12,7 +13,7 @@ only = {int(x) for x in a.only.split(',')} if a.only else None
 def dur(f): return float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', str(f)], capture_output=True, text=True).stdout)
 def say(txt, wav, speed):
     Path(str(wav).replace('.wav', '.txt')).write_text(txt + '\n')
-    subprocess.run([sys.executable, str(MOUTH), 'say', str(wav).replace('.wav', '.txt'), str(wav), '--voice', a.voice, '--speed', f'{speed:.3f}', '--words'], check=True, capture_output=True)
+    subprocess.run([sys.executable, str(MOUTH), 'say', str(wav).replace('.wav', '.txt'), str(wav), '--voice', a.voice, '--speed', f'{speed:.3f}', '--words', '--lexicon', str(ROOT / 'voice' / 'lexicon.json')], check=True, capture_output=True)
     return json.loads(Path(str(wav).replace('.wav', '.json')).read_text())
 for r in data['reels']:
     if only and r['id'] not in only: continue
