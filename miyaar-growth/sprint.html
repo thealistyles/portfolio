@@ -1,0 +1,521 @@
+<title>Miyaar 7-Day Client Sprint</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky tab bar over a single 1080px column; the 7-day view is a day strip + a two-lane (Sales | Build) task board. */
+:root{
+  --bg:#f3f6f4; --surface:#ffffff; --surface-2:#e8efeb; --line:#d3ddd7;
+  --fg:#12201b; --muted:#56665f; --accent:#0a7a55; --accent-ink:#ffffff; --accent-soft:#d6efe4;
+  --gap:#b45f06; --gap-soft:#fbe9d3; --bubble-in:#ffffff; --bubble-out:#d9f5e6;
+  --font-display:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+  --font-body:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --r:12px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d1512; --surface:#141f1b; --surface-2:#1b2924; --line:#2a3a34;
+  --fg:#e5eee9; --muted:#9db0a7; --accent:#3cc48f; --accent-ink:#06140e; --accent-soft:#163a2c;
+  --gap:#f0a24a; --gap-soft:#3a2a15; --bubble-in:#1f2c27; --bubble-out:#174332; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1512; --surface:#141f1b; --surface-2:#1b2924; --line:#2a3a34;
+  --fg:#e5eee9; --muted:#9db0a7; --accent:#3cc48f; --accent-ink:#06140e; --accent-soft:#163a2c;
+  --gap:#f0a24a; --gap-soft:#3a2a15; --bubble-in:#1f2c27; --bubble-out:#174332; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.55;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.08}
+h2{font-size:24px;line-height:1.2}
+h3{font-size:17px}
+p{margin:0}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:600}
+.muted{color:var(--muted)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* tab bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.brand{font-family:var(--font-display);font-weight:700;font-size:16px;margin-right:auto;white-space:nowrap}
+.brand span{color:var(--accent)}
+.tabs{display:flex;gap:4px;overflow-x:auto;max-width:100%;scrollbar-width:none}
+.tab{border:0;background:transparent;padding:8px 12px;border-radius:999px;font-weight:600;font-size:14px;color:var(--muted);white-space:nowrap}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
+.tab:hover:not([aria-selected="true"]){background:var(--surface-2);color:var(--fg)}
+
+main{padding-block:28px 64px}
+.view{display:grid;gap:28px}
+
+/* overview */
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:center}
+.hero > *{min-width:0}
+.hero-copy{display:grid;gap:14px}
+.lede{font-size:17px;max-width:60ch}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.stat b{display:block;font-family:var(--font-display);font-size:24px;font-variant-numeric:tabular-nums}
+.stat span{font-size:12.5px;color:var(--muted)}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);padding:10px 16px;border-radius:10px;font-weight:600}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+.phone{background:var(--surface-2);border:1px solid var(--line);border-radius:22px;padding:16px;display:grid;gap:10px;max-width:380px;justify-self:center;width:100%}
+.phone-top{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted)}
+.bub{max-width:85%;padding:8px 11px;border-radius:12px;font-size:14px;box-shadow:0 1px 0 var(--line)}
+.bub small{display:block;text-align:right;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bub.out{background:var(--bubble-out);justify-self:end;border-top-right-radius:4px}
+.bub.in{background:var(--bubble-in);justify-self:start;border-top-left-radius:4px}
+.delay{justify-self:center;background:var(--gap-soft);color:var(--gap);font-weight:700;font-size:12.5px;padding:4px 10px;border-radius:999px;font-variant-numeric:tabular-nums}
+.bub.ai{background:var(--accent-soft);justify-self:start;border-top-left-radius:4px}
+.phone .caption{font-size:12px;color:var(--muted);text-align:center}
+
+.engine{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;counter-reset:step}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:6px;position:relative;min-width:0}
+.step .n{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:500}
+.step p{font-size:14px;color:var(--muted)}
+.step:not(:last-child)::after{content:"→";position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;z-index:1}
+
+.offers{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:12px}
+.offer{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:8px;align-content:start;min-width:0}
+.offer.main{border:2px solid var(--accent)}
+.tag{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent);justify-self:start}
+.price{font-family:var(--font-display);font-size:20px;font-variant-numeric:tabular-nums}
+.offer ul{margin:0;padding-left:18px;font-size:14px;color:var(--muted)}
+
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}
+
+/* scoreboard */
+.score{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.meter{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;display:grid;gap:8px;min-width:0}
+.meter .top{display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+.meter .val{font-family:var(--font-display);font-size:22px;font-variant-numeric:tabular-nums}
+.meter .lab{font-size:13px;color:var(--muted)}
+.track{height:6px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.fill{height:100%;background:var(--accent);border-radius:99px;transition:width .25s}
+.pm{display:flex;gap:6px}
+.pm button{flex:1;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:4px 0;font-weight:700}
+
+/* sprint */
+.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.day{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:10px;text-align:left;display:grid;gap:4px;min-width:0}
+.day .d{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.day .t{font-family:var(--font-display);font-weight:600;font-size:14px;line-height:1.2}
+.day[aria-selected="true"]{border:2px solid var(--accent);background:var(--accent-soft)}
+.day .track{height:4px}
+.today{font-size:10.5px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em}
+
+.dayhead{display:grid;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.outcome{display:flex;gap:10px;align-items:flex-start;background:var(--accent-soft);border-radius:10px;padding:10px 12px}
+.outcome b{color:var(--accent);white-space:nowrap}
+.dnav{display:flex;gap:8px;justify-content:space-between}
+.lanes{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.lane{display:grid;gap:10px;align-content:start;min-width:0}
+.lane h3{display:flex;gap:8px;align-items:center}
+.who{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--surface-2);color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.task{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;display:grid;gap:8px;min-width:0}
+.task label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.task input{width:18px;height:18px;margin-top:2px;accent-color:var(--accent);flex:none}
+.task.done{opacity:.62}
+.task.done .tt{text-decoration:line-through}
+.when{font-family:var(--font-mono);font-size:11.5px;color:var(--gap);font-weight:500}
+
+.snip{position:relative;background:var(--surface-2);border-radius:8px;padding:10px 12px;padding-right:74px;min-width:0}
+.snip .k{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.snip pre{margin:0;white-space:pre-wrap;word-break:break-word;font-family:var(--font-mono);font-size:12.5px;line-height:1.5}
+.copy{position:absolute;top:8px;right:8px;border:1px solid var(--line);background:var(--surface);border-radius:7px;padding:4px 9px;font-size:12px;font-weight:600}
+.copy.ok{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+/* skills */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:8px;align-content:start;min-width:0}
+.src{font-size:12px;color:var(--muted);font-family:var(--font-mono);word-break:break-all}
+.howto{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:8px}
+.howto ol{margin:0;padding-left:20px;display:grid;gap:4px}
+
+/* messages */
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface)}
+.lang button{border:0;background:transparent;padding:6px 12px;border-radius:999px;font-weight:600;font-size:13px;color:var(--muted)}
+.lang button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* later */
+details{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+summary{font-family:var(--font-display);font-weight:600;cursor:pointer}
+.phases{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.phase{border:1px solid var(--line);border-radius:10px;padding:12px;display:grid;gap:4px;min-width:0}
+.phase b{font-family:var(--font-display);font-size:22px;color:var(--accent);font-variant-numeric:tabular-nums}
+.later-list{margin:12px 0 0;padding-left:20px;display:grid;gap:4px}
+
+footer{font-size:13px;color:var(--muted);padding-top:8px}
+
+@media (max-width:860px){
+  .hero,.offers,.lanes,.grid2{grid-template-columns:1fr}
+  .grid3,.phases{grid-template-columns:1fr 1fr}
+  .score{grid-template-columns:repeat(3,1fr)}
+  .engine{grid-template-columns:1fr 1fr}
+  .step::after{display:none}
+  .days{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media (max-width:520px){
+  .stats{grid-template-columns:1fr 1fr}
+  .grid3,.phases,.engine{grid-template-columns:1fr}
+  .score{grid-template-columns:1fr 1fr}
+  .days{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .days .day:last-child{grid-column:span 2}
+  .tabs{flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="brand">Miyaar <span>Sprint</span></div>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab" role="tab" data-view="overview">Overview</button>
+      <button class="tab" role="tab" data-view="sprint">7 days</button>
+      <button class="tab" role="tab" data-view="skills">Skills &amp; tools</button>
+      <button class="tab" role="tab" data-view="messages">Messages</button>
+      <button class="tab" role="tab" data-view="later">After week 1</button>
+    </nav>
+  </div>
+</div>
+
+<main class="wrap">
+
+<!-- OVERVIEW -->
+<section class="view" id="v-overview">
+  <div class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">Miyaar Developers · AI automation agency · Lahore</div>
+      <h1>3 paying clients by Friday, 4 Dec.</h1>
+      <p class="lede">Builders, construction firms, architects, real estate agents and clinics pay for WhatsApp ads, then answer hours later. We time their replies, show them the gap, and hand them their own AI agent to try. Then we sell a 14-day paid pilot.</p>
+      <div class="stats">
+        <div class="stat"><b>7</b><span>days, Sat 28 Nov – Fri 4 Dec</span></div>
+        <div class="stat"><b>120</b><span>timed WhatsApp tests</span></div>
+        <div class="stat"><b>6</b><span>demos of their own agent</span></div>
+        <div class="stat"><b>3</b><span>paid pilots</span></div>
+      </div>
+      <div class="cta-row">
+        <button class="btn primary" data-go="sprint">Open today's plan</button>
+        <button class="btn" data-go="messages">Copy the messages</button>
+      </div>
+    </div>
+    <div class="phone" aria-label="Example of a timed WhatsApp test">
+      <div class="phone-top"><span>Example test · DHA builder ad</span><span>WhatsApp</span></div>
+      <div class="bub out">Assalam o Alaikum, 5 marla plot ki price kya hai? Possession mil jaye gi?<small>Tue 8:12 PM</small></div>
+      <div class="delay">No reply for 15 h 28 m</div>
+      <div class="bub in">Ji sir, details share kar dete hain.<small>Wed 11:40 AM</small></div>
+      <div class="bub ai">With Miyaar's agent: price, possession date and a site-visit slot.<small>Tue 8:12 PM · 9 s</small></div>
+      <p class="caption">This proof is what you sell with. Example only.</p>
+    </div>
+  </div>
+
+  <div class="section-head"><div><div class="eyebrow">The engine</div><h2>Signal → Proof → Their agent → Paid pilot</h2></div></div>
+  <div class="engine">
+    <div class="step"><span class="n">1 · SIGNAL</span><h3>They spend</h3><p>Running WhatsApp ads on Meta for 14+ days, or hiring a WhatsApp sales rep or CSR.</p></div>
+    <div class="step"><span class="n">2 · PROOF</span><h3>We time them</h3><p>Message as a customer at 8–10 pm. Log the reply time. lead_hunter writes the pitch.</p></div>
+    <div class="step"><span class="n">3 · THEIR AGENT</span><h3>We show, not tell</h3><p>A demo agent built from their ad and prices in 30 minutes. They chat with it.</p></div>
+    <div class="step"><span class="n">4 · PILOT</span><h3>They pay</h3><p>14 days for PKR 25k, credited to setup. Payment details sent during the call.</p></div>
+  </div>
+
+  <div class="section-head"><div><div class="eyebrow">What we sell</div><h2>One flagship, two door-openers</h2></div></div>
+  <div class="offers">
+    <div class="offer main"><span class="tag">Flagship</span><h3>AI WhatsApp Lead Agent</h3>
+      <div class="price">PKR 25k pilot · 60–120k setup · 20–35k/mo</div>
+      <ul><li>Answers in about 10 seconds, 24/7, in Urdu, Roman Urdu or English</li><li>Asks budget, area and timeline; books site visits</li><li>Alerts the owner on hot leads and sends a daily summary</li><li>UAE: $250 pilot · $700–1,500 setup · $250–400/mo</li></ul></div>
+    <div class="offer"><span class="tag">Quick win</span><h3>Lead-to-WhatsApp automations</h3>
+      <div class="price">PKR 25–50k</div>
+      <ul><li>Meta lead form to WhatsApp in 60 seconds</li><li>Missed-call text-back</li><li>Review booster after a visit</li></ul></div>
+    <div class="offer"><span class="tag">Quick win</span><h3>Website in 7 days</h3>
+      <div class="price">PKR 40–75k</div>
+      <ul><li>For leads with no site, or a broken one</li><li>WhatsApp button and Google profile included</li><li>Upsell to the agent at handover</li></ul></div>
+  </div>
+
+  <div class="section-head"><div><div class="eyebrow">Live scoreboard · saved in this browser</div><h2>Week 1 numbers</h2></div><button class="btn" id="resetScore">Reset numbers</button></div>
+  <div class="score" id="score"></div>
+</section>
+
+<!-- SPRINT -->
+<section class="view" id="v-sprint" hidden>
+  <div class="section-head">
+    <div><div class="eyebrow">Tick tasks as you go · progress saved in this browser</div><h2>The 7-day sprint</h2></div>
+    <div class="muted" id="overall"></div>
+  </div>
+  <div class="days" role="tablist" aria-label="Days" id="days"></div>
+  <div id="dayPanel" class="view"></div>
+</section>
+
+<!-- SKILLS -->
+<section class="view" id="v-skills" hidden>
+  <div class="section-head"><div><div class="eyebrow">Claude Code skills in the portfolio repo · .claude/skills</div><h2>Your AI sales team</h2></div></div>
+  <div class="howto">
+    <h3>How to use them</h3>
+    <ol>
+      <li>Open Claude Code inside the <code>portfolio</code> repo (desktop app, VS Code or the terminal).</li>
+      <li>Skills in <code>.claude/skills</code> load by themselves. Paste a prompt from this page, or type <code>/client-hunter</code>.</li>
+      <li>Run the tool from <code>miyaar-growth/lead-hunter</code>. It needs only Python 3.9+.</li>
+    </ol>
+  </div>
+  <div class="grid3" id="skillCards"></div>
+  <div class="section-head"><div><div class="eyebrow">miyaar-growth/lead-hunter</div><h2>lead_hunter.py commands</h2></div></div>
+  <div class="grid3" id="cmdCards"></div>
+</section>
+
+<!-- MESSAGES -->
+<section class="view" id="v-messages" hidden>
+  <div class="section-head">
+    <div><div class="eyebrow">Send 1:1 from a real person · never broadcast</div><h2>Messages ready to copy</h2></div>
+    <div class="lang" role="group" aria-label="Language">
+      <button data-lang="en">English</button><button data-lang="ur">Roman Urdu</button>
+    </div>
+  </div>
+  <div class="grid2" id="msgCards"></div>
+</section>
+
+<!-- LATER -->
+<section class="view" id="v-later" hidden>
+  <div class="section-head"><div><div class="eyebrow">Later step · only after the sprint</div><h2>After week 1: from 3 to 25 clients</h2></div></div>
+  <details open>
+    <summary>The path to 25 clients by 28 Feb</summary>
+    <div class="phases">
+      <div class="phase"><span class="eyebrow">By 13 Dec</span><b>5</b><span>Run pilots well. Send day-7 and day-14 numbers. First case study: "15 hours to 9 seconds."</span></div>
+      <div class="phase"><span class="eyebrow">By 10 Jan</span><b>11</b><span>Put the case study in every pitch. Convert pilots to monthly.</span></div>
+      <div class="phase"><span class="eyebrow">By 7 Feb</span><b>19</b><span>Partner with 3 Meta-ads agencies that resell the agent. Referral ask to every client.</span></div>
+      <div class="phase"><span class="eyebrow">By 28 Feb</span><b>25</b><span>Ramadan rush (expected from about 8 Feb): pitch handling the Ramadan and Eid WhatsApp volume.</span></div>
+    </div>
+  </details>
+  <details>
+    <summary>Automate later, in this order (after 20+ manual runs each)</summary>
+    <ol class="later-list">
+      <li>Done: lead_hunter.py audits sites and writes speed-test pitches.</li>
+      <li>n8n reminder: tests to send at 8 pm, replies to check at 10 am.</li>
+      <li>Reply detection moves the lead stage and alerts us.</li>
+      <li>Demo-agent cloner: form in, demo agent out in 5 minutes.</li>
+      <li>Day-7 and day-14 client reports sent automatically.</li>
+      <li>Weekly scoreboard built from the Sheet.</li>
+    </ol>
+  </details>
+</section>
+
+<footer>Miyaar Developers · 7-day client sprint · prices are starting points in PKR, with UAE in USD</footer>
+</main>
+
+<script>
+(function(){
+const S_KEY='miyaar-sprint-v1';
+const store={get(){try{return JSON.parse(localStorage.getItem(S_KEY))||{}}catch(e){return {}}},
+  set(v){try{localStorage.setItem(S_KEY,JSON.stringify(v))}catch(e){}}};
+let state=Object.assign({tasks:{},score:{},lang:'en',day:null},store.get());
+const save=()=>store.set(state);
+
+const DAYS=[
+ {date:'2026-11-28',label:'Sat 28 Nov',title:'Build the demo agent',
+  outcome:'The demo agent answers a Roman Urdu question in under 10 seconds on Miyaar\'s test number. 20 advertisers timed tonight. Launch post live.',
+  sales:[
+   {t:'Post the launch on WhatsApp status, Facebook, Instagram and LinkedIn.',msg:'launch'},
+   {t:'Send 50 personal WhatsApps to your own network: "we launched; who needs this?" A referral that signs earns 10%.',msg:'warm'},
+   {t:'Find 20 advertisers in the Meta Ad Library (Pakistan or UAE) running WhatsApp ads for 14+ days: builders, construction, architects, real estate, clinics.',
+    p:'Use the client-hunter skill. Give me 20 Meta Ad Library search keywords for Lahore and Dubai builders, construction companies, architects, interior designers and clinics, and one genuine customer question per niche for a WhatsApp speed test (English and Roman Urdu).'},
+   {when:'8–10 PM',t:'Message all 20 through their ad as a customer. Log each one in speed-test-log.csv (business, phone, channel, topic, sent_at).',msg:'test'}],
+  build:[
+   {t:'Create a Meta developer app and get the free WhatsApp Cloud API test number.'},
+   {t:'Build the reusable demo agent in n8n: WhatsApp webhook → AI Agent (Claude Haiku 5.5) → facts sheet → book_visit → owner alert.',
+    p:'Use the ai-automation-architect and n8n-agents skills. Design our reusable demo WhatsApp lead agent in n8n: Cloud API webhook, AI Agent on claude-haiku-5-5, Google Sheet facts tool, book_visit tool, handoff_to_human tool, chat memory keyed by phone. Give me the node-by-node build list and the system prompt in English and Roman Urdu, for a Lahore real estate builder.'},
+   {t:'Run 10 test chats: English, Roman Urdu, a price haggler, an angry customer, off-topic questions.'}]},
+ {date:'2026-11-29',label:'Sun 29 Nov',title:'Turn silence into proof',
+  outcome:'10+ evidence-based pitches sent, each with the exact reply times. 3 conversations started.',
+  sales:[
+   {t:'Fill first_reply_at for last night\'s 20 (leave it blank for no reply), then run the speed test.',cmd:'python lead_hunter.py speedtest speed-test-log.csv --checked-at "2026-11-29 10:00"'},
+   {t:'Rank the gaps and choose 5 to call first.',p:'Use the client-hunter skill. Read miyaar-growth/lead-hunter/speedtest-pitches.csv, rank every GAP by reply delay and likely deal size, and tell me the 5 to call first with one reason each.'},
+   {t:'Call each GAP, then send its WhatsApp pitch. Say honestly that you tested them as a customer.',msg:'gap'},
+   {t:'Hiring signal: find 10 companies hiring a WhatsApp sales rep, CSR, telesales or receptionist on Rozee.pk or LinkedIn.',
+    p:'Use the prospecting skill (signal plays). For these 10 job posts [paste the posts], pull out the repetitive tasks and write a 3-line WhatsApp opener for each that offers an AI assistant for those tasks.'},
+   {when:'8–10 PM',t:'Send 50 more warm messages and 20 new speed tests.'}],
+  build:[
+   {t:'Record a 30-second screen video: the demo agent answers a 10 PM question in Roman Urdu and books a site visit.'},
+   {t:'Make the demo kit: one Google Sheet template (business facts, prices, FAQs, areas), so each new demo takes 30 minutes.'}]},
+ {date:'2026-11-30',label:'Mon 30 Nov',title:'Show them their own agent',
+  outcome:'3 prospect-specific demo agents live. 3 demo calls booked.',
+  sales:[
+   {t:'Send the 3 hottest gaps the "try your own assistant" message with the demo number.',msg:'try'},
+   {t:'Field day: visit 10 real estate and builder offices in one DHA or Bahria phase. Show the agent on your phone and leave with WhatsApp numbers.'},
+   {t:'Send the 30-second video to yesterday\'s gaps that did not reply.'},
+   {when:'8–10 PM',t:'20 new speed tests.'}],
+  build:[
+   {t:'Build 3 tailored demo agents from each prospect\'s ad copy and prices.',
+    p:'Use the ai-automation-architect skill. Build a demo agent system prompt and facts sheet for [Business] from this ad copy and price list: [paste]. Keep it to their real prices and add a site-visit booking question.'},
+   {t:'Prepare the quick-win template: Meta lead form → WhatsApp reply in 60 seconds.',
+    p:'Use the n8n-workflow-patterns skill. Design a workflow: Meta lead ads webhook → instant WhatsApp template message → Google Sheet row → owner alert, with an error branch.'}]},
+ {date:'2026-12-01',label:'Tue 1 Dec',title:'Demo day',
+  outcome:'3–4 demos held. 2 quotes sent with payment details.',
+  sales:[
+   {t:'Prepare each demo: their evidence, ROI math and the close line.',
+    p:'Use the agency-closer skill. Prepare my 15-minute demo for [Business]: their speed-test evidence [paste], ROI math for [40] enquiries a day at PKR [value] per customer, the pilot offer and my closing line.'},
+   {t:'Run 15-minute demos: the evidence, a live chat with their own agent, ROI, then offer the 14-day pilot (PKR 25k). Send payment details during the call.'},
+   {t:'Send a same-day WhatsApp quote to anyone who wants to think.',msg:'quote'},
+   {when:'8–10 PM',t:'20 new speed tests.'}],
+  build:[
+   {t:'Website-gap list for quick wins: copy 20 builders or architects from Google Maps into leads.csv, then audit them.',cmd:'python lead_hunter.py audit leads.csv'},
+   {t:'Join the demos to answer technical questions (number setup, data privacy, pausing the bot).'}]},
+ {date:'2026-12-02',label:'Wed 2 Dec',title:'Follow up and widen',
+  outcome:'At least 1 payment received or a pilot start date agreed. 5 referral asks sent.',
+  sales:[
+   {t:'Second touch to every open lead, with the 30-second clip.'},
+   {t:'Ask every "no" for 2 names. A referral that signs earns 10%.',msg:'ref'},
+   {t:'Visit 10 more offices: construction, architect and interior firms in Johar Town or Gulberg.'},
+   {t:'Post your findings as content (with no business named).',
+    p:'Write a LinkedIn and Facebook post from our speed-test results: [X] Lahore businesses tested, average first reply [Y] hours, [Z]% never replied. Name no business. End by offering a free 2-minute demo.'},
+   {when:'8–10 PM',t:'20 new speed tests.'}],
+  build:[{t:'Turn this week\'s objections into pilot guardrails: price-sheet-only answers, human handoff, a one-word pause.'}]},
+ {date:'2026-12-03',label:'Thu 3 Dec',title:'Closing day',
+  outcome:'2–3 paid pilots or quick wins.',
+  sales:[
+   {t:'Call every lead that saw a demo: "We can start 2 pilots this week. Shall I keep one for you?" Only say this if the capacity is real.'},
+   {t:'Write closing messages for each lead.',p:'Use the agency-closer skill. Write today\'s closing WhatsApp for each of these leads based on where they are: [paste name, stage, objection].'},
+   {t:'Send payment details and confirm each payment by screenshot.'}],
+  build:[{t:'Start each pilot the day payment lands: facts form, connect the number (keep the WhatsApp app alongside if available, otherwise a new number), go-live checklist.',
+    p:'Use the ai-automation-architect skill. Give me the go-live checklist and onboarding form for a 14-day WhatsApp agent pilot for [Business].'}]},
+ {date:'2026-12-04',label:'Fri 4 Dec',title:'Deliver and multiply',
+  outcome:'3 paying clients. The first agent live on a client\'s number.',
+  sales:[
+   {t:'Collect the remaining payments before Jummah.'},
+   {t:'Ask each paying client for 2 referrals and permission for a case study.',msg:'ref'},
+   {t:'Fill the scoreboard. Pick next week\'s niche: the one with the most gaps that turned into demos.'}],
+  build:[
+   {t:'Take the first client live and send their day-1 report: enquiries answered and average reply time.'},
+   {t:'Write down every step you repeated this week. That list is the automation backlog.'}]}
+];
+
+const MSGS={
+ test:{h:'Speed-test question (you as a customer)',
+  en:'Real estate: Hi, I saw your ad for [project]. What is the price of a 5 marla plot, and is possession available?\nConstruction: Hi, I want to build a 10 marla house in [area]. What is your per square foot rate for grey structure?\nArchitect / interior: Hi, I need a design for a 1 kanal house. What are your charges and how long does it take?\nClinic: Hi, what does [treatment] cost, and can I book this week?',
+  ur:'Real estate: Assalam o Alaikum, aap ka [project] ka ad dekha. 5 marla plot ki price kya hai aur possession mil jaye gi?\nConstruction: Assalam o Alaikum, [area] mein 10 marla ghar banwana hai. Grey structure ka per square foot rate kya hai?\nArchitect / interior: Assalam o Alaikum, 1 kanal ghar ka design chahiye. Charges kya hain aur kitna time lagega?\nClinic: Assalam o Alaikum, [treatment] ki cost kya hai aur kya is hafte appointment mil sakti hai?'},
+ gap:{h:'Gap pitch (lead_hunter writes it with the real times)',
+  en:'Hi [Business] team, an honest note: on [day] at [time] I messaged your WhatsApp ad as a customer, asking about [topic]. The first reply came [X hours] later. People who message from ads usually contact 3 or 4 businesses and go with whoever answers first, so slow replies quietly burn ad money. We set up an AI WhatsApp assistant that answers in under 10 seconds, 24/7, asks budget and location, and books visits for your team. Can I show you a 2-minute demo on your own number this week?',
+  ur:'Assalam o Alaikum [Business] team! Seedhi baat: [date] ko [time] par main ne customer ban kar aap ke WhatsApp ad par [topic] ke baare mein poocha. Pehla reply [X ghante] baad aaya. Ads se aane wale log 3-4 businesses ko message karte hain aur jo pehle jawab de usi se deal karte hain. Hum AI WhatsApp assistant lagate hain jo 10 second mein 24/7 jawab deta hai, budget aur location poochta hai aur visit book karta hai. Kya is hafte aap ke number par 2 minute ka demo dikha doon?'},
+ try:{h:'"Try your own assistant"',
+  en:'Hi [Name], I built a small AI assistant trained on your [project] ad. Message this number as if you were a customer: [demo number]. It answers in seconds in Urdu or English and books site visits. If you like it, I will show you how it runs on your own number in 15 minutes.',
+  ur:'Assalam o Alaikum [Name]! Main ne aap ke [project] ad par ek chhota AI assistant banaya hai. Is number par customer ban kar message karein: [demo number]. Yeh seconds mein Urdu ya English mein jawab deta hai aur site visit book karta hai. Pasand aaye to 15 minute mein dikha doon ga ke aap ke apne number par kaise chalega.'},
+ quote:{h:'Same-day quote',
+  en:'[Name], as discussed: AI WhatsApp assistant for [Business]. It answers every enquiry within 10 seconds, 24/7; asks budget, area and timeline; books site visits; alerts you on hot leads; and sends a daily summary. 14-day pilot: PKR 25,000, credited to setup if you continue; then PKR [X]/month. Live within 5 days of payment. Payment: [details]. Send the screenshot and we start today.',
+  ur:'[Name], jaise baat hui: [Business] ke liye AI WhatsApp assistant. Har enquiry ka 10 second mein 24/7 jawab, budget, area aur timeline poochna, site visit book karna, hot leads par aap ko alert aur roz ki summary. 14 din ka pilot: PKR 25,000, aage chalein to setup mein adjust. Phir PKR [X] mahana. Payment ke 5 din mein live. Payment: [details]. Screenshot bhejein, hum aaj hi shuru karte hain.'},
+ launch:{h:'Launch post (status, Facebook, LinkedIn)',
+  en:'Miyaar Developers is live. We build AI WhatsApp assistants for builders, real estate, architects and clinics: every enquiry answered in seconds, 24/7, and site visits booked while you sleep. Taking 3 pilot clients this week. Message "DEMO" to try one.',
+  ur:'Miyaar Developers launch ho gaya! Hum builders, real estate, architects aur clinics ke liye AI WhatsApp assistant banate hain: har enquiry ka seconds mein 24/7 jawab, aur raat ko bhi site visits book. Is hafte 3 pilot clients le rahe hain. Try karne ke liye "DEMO" likh kar message karein.'},
+ warm:{h:'Warm network',
+  en:'Hi [Name]! We have launched Miyaar Developers. We build AI WhatsApp assistants that answer customers in seconds and book visits, for builders, real estate, architects and clinics. Do you know a business owner who loses customers because replies are slow? If they sign up, 10% of the first project is yours.',
+  ur:'Assalam o Alaikum [Name]! Hum ne Miyaar Developers launch kiya hai. Hum AI WhatsApp assistant banate hain jo customers ko seconds mein jawab deta hai aur visit book karta hai, builders, real estate, architects aur clinics ke liye. Koi business owner jaante hain jis ke customers late reply ki wajah se nikal jaate hain? Wo sign up karein to pehle project ka 10% aap ka.'},
+ ref:{h:'Referral ask',
+  en:'Thanks for your time. Quick question: do you know 1 or 2 business owners whose WhatsApp gets more messages than they can answer? If they sign up, I will send you 10% of the setup as a thank-you.',
+  ur:'Waqt dene ka shukriya! Ek sawal: kya aap 1-2 aise business owners jaante hain jin ke WhatsApp par itne messages aate hain ke jawab dena mushkil hota hai? Wo sign up karein to setup ka 10% aap ko shukriye ke taur par.'},
+ hire:{h:'Hiring-signal opener',
+  en:'Hi [Name], I saw you are hiring a [role] to [task from the post]. Before the hire starts, or for nights and weekends, an AI assistant can handle [task], answering in seconds and passing hot leads to your team. Want a 2-minute demo?',
+  ur:'Assalam o Alaikum [Name], dekha ke aap [role] hire kar rahe hain [task] ke liye. Jab tak hire nahi hota, ya raat aur weekend ke liye, AI assistant [task] sambhal sakta hai: seconds mein jawab aur hot leads aap ki team ko. 2 minute ka demo dekhna chahein ge?'}
+};
+const MSG_ORDER=['test','gap','try','quote','hire','warm','launch','ref'];
+
+const SKILLS=[
+ {n:'client-hunter',src:'Miyaar · built for you',d:'Runs the Ad Leak Hunt, hiring-signal and website-gap plays. Ranks leads and writes openers using lead_hunter.py.',p:'Use the client-hunter skill. Find today\'s 20 advertisers to test and rank yesterday\'s gaps.'},
+ {n:'ai-automation-architect',src:'Miyaar · built for you',d:'Designs the WhatsApp lead agent and quick-win automations: architecture, demo agent, go-live checklist and pricing.',p:'Use the ai-automation-architect skill. Scope an AI WhatsApp agent for [Business] and price it.'},
+ {n:'agency-closer',src:'Miyaar · built for you',d:'Turns replies into demos and paid pilots: 15-minute demo script, same-day quote, follow-ups and objection answers.',p:'Use the agency-closer skill. They said "AI will say wrong things". Give me my answer.'},
+ {n:'prospecting',src:'github.com/coreyhaines31/marketingskills',d:'Signal plays and gap plays: who is buying now (ads, hiring, growth) and how to verify a gap before pitching.',p:'Use the prospecting skill. Which signals should I stack for Lahore builders this week?'},
+ {n:'offers',src:'github.com/coreyhaines31/marketingskills',d:'Shapes the pilot so the yes comes easily: risk reversal, honest urgency, credit toward setup.',p:'Use the offers skill. Make my 14-day pilot offer stronger without discounting.'},
+ {n:'n8n-agents',src:'github.com/czlonkowski/n8n-skills',d:'Builds the AI Agent node correctly: system prompt, tools, memory, structured output, human review.',p:'Use the n8n-agents skill. Add a book_visit tool and handoff rules to our agent.'},
+ {n:'n8n-workflow-patterns',src:'github.com/czlonkowski/n8n-skills',d:'Webhook, scheduled and API patterns for the follow-ups, lead-form flows and daily owner summaries.',p:'Use the n8n-workflow-patterns skill. Build the 9 PM daily summary to the owner.'}
+];
+const CMDS=[
+ {h:'speedtest',d:'Turns your timed WhatsApp tests into pitches with the real reply times (English and Roman Urdu). Writes speedtest-pitches.csv.',c:'python lead_hunter.py speedtest speed-test-log.csv --checked-at "2026-11-29 10:00"'},
+ {h:'audit',d:'Checks each business\'s own website (HTTPS, mobile, speed, WhatsApp, chat, booking, Meta Pixel), scores it Hot, Warm or Cold, and writes an opener.',c:'python lead_hunter.py audit leads.csv'},
+ {h:'discover',d:'Optional. Pulls businesses from the Google Places API if you have a key. Use the data for outreach now; do not keep it as a database.',c:'export GOOGLE_PLACES_API_KEY=your_key\npython lead_hunter.py discover "construction company Johar Town Lahore" --max 60'}
+];
+const SCORE=[{k:'tests',l:'Timed tests',t:120},{k:'gaps',l:'Gaps found',t:60},{k:'convos',l:'Conversations',t:15},{k:'demos',l:'Demos held',t:6},{k:'paid',l:'Paid pilots',t:3}];
+
+const el=(tag,attrs={},html='')=>{const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);if(html)e.innerHTML=html;return e};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function snippet(kind,text){return `<div class="snip"><div class="k">${kind}</div><pre>${esc(text)}</pre><button class="copy" type="button">Copy</button></div>`}
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.copy'); if(!b) return;
+  const pre=b.parentElement.querySelector('pre'); const text=pre.textContent;
+  const done=(m)=>{b.textContent=m;b.classList.add('ok');setTimeout(()=>{b.textContent='Copy';b.classList.remove('ok')},1600)};
+  try{navigator.clipboard.writeText(text).then(()=>done('Copied'),()=>sel())}catch(err){sel()}
+  function sel(){const r=document.createRange();r.selectNodeContents(pre);const s=getSelection();s.removeAllRanges();s.addRange(r);done('Selected')}
+});
+
+/* views */
+const VIEWS=['overview','sprint','skills','messages','later'];
+function show(view){
+  if(/^day-[1-7]$/.test(view)){state.day=+view.slice(4)-1;save();view='sprint'}
+  if(!VIEWS.includes(view)) view='overview';
+  VIEWS.forEach(v=>{document.getElementById('v-'+v).hidden=v!==view});
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.view===view));
+  if(view==='sprint') renderSprint();
+}
+function go(view){ if(location.hash!=='#'+view) location.hash=view; else show(view); window.scrollTo({top:0}); }
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
+
+/* sprint */
+function defaultDay(){
+  const today=new Date(); const iso=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+  const i=DAYS.findIndex(d=>d.date===iso); if(i>=0) return i; return iso>DAYS[6].date?6:0;
+}
+function todayIdx(){const t=new Date();const iso=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');return DAYS.findIndex(d=>d.date===iso)}
+function dayTasks(i){const d=DAYS[i];return [...d.sales.map((t,j)=>'d'+i+'s'+j),...d.build.map((t,j)=>'d'+i+'b'+j)]}
+function pct(i){const ids=dayTasks(i);return Math.round(100*ids.filter(id=>state.tasks[id]).length/ids.length)}
+function renderSprint(){
+  if(state.day==null) state.day=defaultDay();
+  const strip=document.getElementById('days'); strip.innerHTML='';
+  const ti=todayIdx();
+  DAYS.forEach((d,i)=>{
+    const b=el('button',{class:'day',role:'tab','aria-selected':i===state.day,type:'button'},
+      `<span class="d">Day ${i+1} · ${d.label}</span>${i===ti?'<span class="today">Today</span>':''}<span class="t">${d.title}</span><div class="track"><div class="fill" style="width:${pct(i)}%"></div></div>`);
+    b.addEventListener('click',()=>go('day-'+(i+1)));
+    strip.appendChild(b);
+  });
+  const all=DAYS.flatMap((_,i)=>dayTasks(i)); const n=all.filter(id=>state.tasks[id]).length;
+  document.getElementById('overall').textContent=`${n} of ${all.length} tasks done this week`;
+  const d=DAYS[state.day]; const p=document.getElementById('dayPanel');
+  const lane=(name,role,list,key)=>`<div class="lane"><h3>${name} <span class="who">${role}</span></h3>${list.map((t,j)=>{
+      const id='d'+state.day+key+j; const done=!!state.tasks[id];
+      return `<div class="task${done?' done':''}"><label><input type="checkbox" id="${id}" ${done?'checked':''}><span>${t.when?`<span class="when">${t.when}</span> `:''}<span class="tt">${esc(t.t)}</span></span></label>${t.p?snippet('Claude prompt',t.p):''}${t.cmd?snippet('Command',t.cmd):''}${t.msg?snippet('Message · '+MSGS[t.msg].h,MSGS[t.msg][state.lang]):''}</div>`}).join('')}</div>`;
+  p.innerHTML=`<div class="dayhead"><div class="eyebrow">Day ${state.day+1} · ${d.label}</div><h2>${d.title}</h2><div class="outcome"><b>Done when</b><span>${esc(d.outcome)}</span></div>
+    <div class="dnav"><button class="btn" type="button" id="prevDay" ${state.day===0?'disabled':''}>← Previous day</button><button class="btn primary" type="button" id="nextDay" ${state.day===6?'disabled':''}>Next day →</button></div></div>
+    <div class="lanes">${lane('Sales','Ali',d.sales,'s')}${lane('Build','Developer',d.build,'b')}</div>`;
+  p.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.addEventListener('change',()=>{state.tasks[cb.id]=cb.checked;save();renderSprint()}));
+  const pv=document.getElementById('prevDay'),nx=document.getElementById('nextDay');
+  pv.addEventListener('click',()=>go('day-'+state.day)); nx.addEventListener('click',()=>go('day-'+(state.day+2)));
+}
+
+/* scoreboard */
+function renderScore(){
+  const box=document.getElementById('score'); box.innerHTML='';
+  SCORE.forEach(s=>{const v=state.score[s.k]||0;const w=Math.min(100,Math.round(100*v/s.t));
+    const m=el('div',{class:'meter'},`<div class="top"><span class="val">${v}</span><span class="lab">/ ${s.t}</span></div><span class="lab">${s.l}</span><div class="track"><div class="fill" style="width:${w}%"></div></div><div class="pm"><button type="button" aria-label="Subtract one from ${s.l}">−</button><button type="button" aria-label="Add one to ${s.l}">+</button></div>`);
+    const [minus,plus]=m.querySelectorAll('.pm button');
+    minus.addEventListener('click',()=>{state.score[s.k]=Math.max(0,v-1);save();renderScore()});
+    plus.addEventListener('click',()=>{state.score[s.k]=v+1;save();renderScore()});
+    box.appendChild(m)});
+}
+document.getElementById('resetScore').addEventListener('click',e=>{
+  const b=e.currentTarget; if(b.dataset.armed){state.score={};save();renderScore();b.textContent='Reset numbers';delete b.dataset.armed}
+  else{b.dataset.armed='1';b.textContent='Click again to reset';setTimeout(()=>{b.textContent='Reset numbers';delete b.dataset.armed},3000)}});
+
+/* skills + commands */
+document.getElementById('skillCards').innerHTML=SKILLS.map(s=>`<div class="card"><span class="tag">${s.src.startsWith('Miyaar')?'Miyaar':'GitHub · MIT'}</span><h3>${s.n}</h3><span class="src">${s.src}</span><p class="muted">${s.d}</p>${snippet('Try',s.p)}</div>`).join('');
+document.getElementById('cmdCards').innerHTML=CMDS.map(c=>`<div class="card"><h3>${c.h}</h3><p class="muted">${c.d}</p>${snippet('Command',c.c)}</div>`).join('');
+
+/* messages */
+function renderMsgs(){
+  document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===state.lang));
+  document.getElementById('msgCards').innerHTML=MSG_ORDER.map(k=>`<div class="card"><h3>${MSGS[k].h}</h3>${snippet(state.lang==='en'?'English':'Roman Urdu',MSGS[k][state.lang])}</div>`).join('');
+}
+document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>{state.lang=b.dataset.lang;save();renderMsgs();if(!document.getElementById('v-sprint').hidden)renderSprint()}));
+
+renderScore(); renderMsgs(); show(location.hash.slice(1)||'overview');
+})();
+</script>
