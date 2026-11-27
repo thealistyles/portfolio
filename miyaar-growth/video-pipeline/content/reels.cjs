@@ -34,7 +34,7 @@ const reels = [
    { type: 'clip', dur: 2.4, clip: C(T.steel), text: { at: 'top', k: 'Grey structure from PKR 3,200 per sq ft', h: ['What does it', '==actually buy?=='] } },
    { type: 'card', dur: 6.8, clip: C(T.brick), card: { kind: 'list', title: 'Named in your BOQ', step: .7, items: ['Grade-60 steel (Mughal, Amreli)', 'Fauji, Bestway or Maple Leaf cement', 'A-grade awwal bricks', '1:2:4 concrete, vibrated', 'Chenab sand, Margalla crush'] } },
    CTA('Save this before you ==hire a builder==.', 'Get your itemised BOQ free') ],
-   vo: 'Grey structure from three thousand two hundred rupees a square foot. Here is what that buys: Grade-60 steel, named cement, A-grade bricks, and one-two-four concrete. All written in your BOQ.',
+   vo: 'Grey structure from three thousand two hundred rupees a square foot. Here is what that buys: Grade-60 steel, named cement, A-grade bricks, and one-two-four concrete. All of it is written in your BOQ.',
    caption: 'Save this before you hire a contractor. Our grey structure starts from PKR 3,200 per sq ft, and every brand and grade is written into the BOQ:\nGrade-60 steel (Mughal, Amreli), Fauji, Bestway or Maple Leaf cement, A-grade awwal bricks, 1:2:4 concrete, Chenab sand, Margalla crush.' },
 
  { id: 4, title: 'Building from abroad', hook: 'Story (overseas)', scenes: [
