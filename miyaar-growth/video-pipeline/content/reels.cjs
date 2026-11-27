@@ -27,7 +27,7 @@ const reels = [
    { type: 'card', dur: 5, img: 'awt-1.jpg', card: { kind: 'list', x: 1, title: 'How cheap builds go wrong', items: ['A lump sum with no breakdown', 'Steel and cement chosen later', '“Extras” after the slab is poured', 'The finish date keeps moving'] } },
    { type: 'card', dur: 3.4, img: 'bahria-1.jpg', card: { kind: 'list', title: 'At Miyaar', items: ['An itemised BOQ before signing', 'It becomes your ==fixed-price== contract'] } },
    CTA('Get a quote you can ==check==.', 'Every material named and priced') ],
-   vo: 'The lowest quote is the most expensive one. No breakdown, materials picked later, extras after the slab. At Miyaar, your itemised BOQ becomes a fixed-price contract.',
+   vo: 'The lowest quote is the most expensive one. No breakdown, materials picked later, extras after the slab. With us, your itemised BOQ becomes a fixed-price contract.',
    caption: 'A low lump-sum quote with no breakdown is how “extras” appear after the slab is poured. Ask for an itemised BOQ, and make it the contract.\n\nHave you been hit with extras? Tell us below.' },
 
  { id: 3, title: 'What PKR 3,200 buys', hook: 'Value (saves)', scenes: [
