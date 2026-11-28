@@ -20,7 +20,8 @@ function clipFrames(s) { // extract the frames a clip scene needs, once
   }
   return { ...s, clip: 'file://' + dir, frames: fs.readdirSync(dir).filter(f => f.endsWith('.jpg')).length };
 }
-const prepare = spec => ({ ...spec, scenes: spec.scenes ? spec.scenes.map(s => s.clip ? clipFrames(s) : s) : undefined, ...(spec.clip ? clipFrames(spec) : {}) });
+const phoneMsgs = s => s.msgs ? { ...s, msgs: s.msgs.map(m => { if (!m.clip) return m; const c = clipFrames({ clip: m.clip, dur: 2.6 }); return { ...m, clip: c.clip, frames: c.frames }; }) } : s;
+const prepare = spec => ({ ...phoneMsgs(spec), scenes: spec.scenes ? spec.scenes.map(s => s.clip ? clipFrames(s) : phoneMsgs(s)) : undefined, ...(spec.clip ? clipFrames(spec) : {}) });
 (async () => {
   for (const d of ['silent', 'posts', 'covers', 'qa']) fs.mkdirSync(path.join(OUT, d), { recursive: true });
   const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1080, height: 1920 } });
@@ -34,7 +35,7 @@ const prepare = spec => ({ ...spec, scenes: spec.scenes ? spec.scenes.map(s => s
   }
   for (const r0 of pick(reels)) {
     if (MODE === 'posts') break;
-    const missing = r0.scenes.filter(s => s.clip && !fs.existsSync(path.join(ASSETS, s.clip.src))).map(s => s.clip.src);
+    const missing = r0.scenes.flatMap(s => [s.clip, ...(s.msgs || []).map(m => m.clip)]).filter(c => c && !fs.existsSync(path.join(ASSETS, c.src))).map(c => c.src);
     if (missing.length) { console.log(`reel ${r0.id}: skipped, missing assets/${[...new Set(missing)].join(', ')}`); continue; }
     const r = prepare(r0); const dur = await p.evaluate(([s, a]) => setupReel(s, a), [r, A]);
     if (MODE === 'preview') { let t = 0; for (const [i, s] of r.scenes.entries()) { t += s.dur; await p.evaluate(x => seekAsync(x), t - .3); await p.screenshot({ path: `${OUT}/qa/r${pad(r.id)}-s${i}.jpg`, type: 'jpeg', quality: 70 }); } continue; }

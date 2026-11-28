@@ -16,9 +16,9 @@ Needs Node with Playwright, Python 3, and ffmpeg. The first voice run downloads 
 
 | Folder | What |
 |---|---|
-| `final/reel-01.mp4` … `reel-15.mp4` | 9:16 reels with voiceover, ready to post |
+| `final/reel-01.mp4` … `reel-24.mp4` | 9:16 reels with voiceover and music, ready to post (17–24 are the second batch) |
 | `final/reel-16.mp4` | AI plot-to-house film (Canva Locked Transformation). Rendered only when `assets/canva-transformation-aabpara.mp4` is present |
-| `posts/post-01.jpg` … `post-15.jpg` | 1080 × 1350 posts |
+| `posts/post-01.jpg` … `post-23.jpg` | 1080 × 1350 posts |
 | `covers/` | Cover frame for each reel |
 | `captions.txt` | Caption and hashtags for every reel and post |
 | `silent/`, `voice/` | Intermediate files |
@@ -28,7 +28,8 @@ Needs Node with Playwright, Python 3, and ffmpeg. The first voice run downloads 
 1. **`fetch_assets.sh`** downloads Miyaar's photos and `plot-to-keys.mp4` from the website into `assets/`.
 2. **`content/reels.cjs`** holds every reel as a list of scenes, plus its voiceover script, caption and hashtags. Edit this file to make new reels.
 3. **`render.cjs`** opens `engine/studio.html` in headless Chromium, steps through each reel frame by frame at 30 fps, and pipes the frames to ffmpeg. Clip scenes pull their frames from the plot-to-keys film.
-4. **`voice/make_voice.py`** reads each script with Kokoro (`voice/mouth.py`, from the `mouth` skill). If a voice runs longer than its video, it speeds it up just enough, up to 1.25×. Then it mixes the voice in at -14 LUFS and writes `captions.txt`.
+4. **`voice/make_music.py`** generates an original, copyright-free music bed (`assets/bed.wav`: an A-minor pad, bass, light drums and an arpeggio at 96 BPM). The mix ducks it under the voice.
+5. **`voice/make_voice.py`** reads each script with Kokoro (`voice/mouth.py`, from the `mouth` skill). If a voice runs longer than its video, it speeds it up just enough, up to 1.25×. Then it mixes the voice in at -14 LUFS and writes `captions.txt`.
 
 ## Scene types (in `content/reels.cjs`)
 
@@ -37,7 +38,10 @@ Needs Node with Playwright, Python 3, and ffmpeg. The first voice run downloads 
 | `photo` | A house photo or render with slow pan or zoom; the whole house stays sharp over a blurred fill | `img`, `kb` (`in`, `out`, `left`, `right`, `up`), `text`, optional `num`, `fit: 'cover'` |
 | `clip` | A moment from a video in `assets/` | `clip: C(T.steel)` or `{ src, from }`, `text` |
 | `card` | A panel over a dimmed background: prices, a list, or a comparison | `card: { kind: 'price' \| 'list' \| 'compare', … }` |
+| `phone` | WhatsApp-style chat with build clips playing inside the bubbles (the overseas weekly-update format) | `chat`, `msgs: [{ at, text, clip, me, time }]`, `note` |
 | `cta` | End card with the WhatsApp number and site | `h`, `sub` |
+
+Card kinds: `price`, `list`, `compare`, `calc` (rows plus an animated PKR total), `boq` (rows plus a stamp such as FIXED PRICE or SIGNED) and `stages` (numbered steps plus a progress bar).
 
 The `text` field takes `{ at: 'top' | 'bottom', k, h, sub, tag, size }`. Wrap words in `==double equals==` to colour them amber.
 

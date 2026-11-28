@@ -143,6 +143,71 @@ const reels = [
    CTA('Your plot could be ==next==.', 'Free estimate · miyaardevelopers.com') ],
    vo: 'Watch this empty plot become a house. Frame and brick, then the finishing. A turnkey home we handed over in twenty twenty-four. Your plot could be next.',
    caption: 'From empty plot to finished home: an AI visualisation of how we built this modern luxury residence in T & T Aabpara Society, turnkey, handed over in 2024.\n\nMessage us your plot size for a free estimate.' },
+
+ // ---- Batch 2: formats competitors are not using ----
+ { id: 17, title: 'POV: building from Dubai', hook: 'POV story (shares, overseas)', scenes: [
+   { type: 'clip', dur: 2.4, clip: C(T.phone), text: { at: 'top', h: ['POV: you are in Dubai.'], sub: 'Your house is going up in Lahore.' } },
+   { type: 'phone', dur: 8, chat: 'Miyaar site updates', note: 'Example updates. Weekly site video comes to your WhatsApp.', msgs: [
+     { at: .3, clip: C(T.dig), text: 'Week 2: excavation and foundation', time: 'Fri 6:10 PM' },
+     { at: 2.9, clip: C(T.pour), text: 'Week 7: roof slab poured, checked against the BOQ', time: 'Fri 6:04 PM' },
+     { at: 5.6, me: 1, text: 'Looks solid. Ammi will visit on Sunday.', time: 'Fri 9:12 PM' } ] },
+   CTA('Build from ==anywhere==.', 'Weekly site video, unasked') ],
+   vo: 'You are in Dubai. Your house is going up in Lahore. Every week, the site video comes to your WhatsApp without asking. You see every pour and every wall.',
+   caption: 'Building from Dubai, London or Toronto? Every week, walkthrough video and photos from your site go straight to your WhatsApp, without asking.\n\nThe updates shown are examples. Tag someone abroad who owns a plot.' },
+
+ { id: 18, title: 'Worked example: 10 marla cost', hook: 'Value (saves)', scenes: [
+   { type: 'photo', dur: 2.6, img: 'brochure-10marla-bahria.jpg', kb: 'in', text: { at: 'top', h: ['What does a 10 marla', 'grey structure ==really cost==?'], size: 'md' } },
+   { type: 'card', dur: 5.4, img: 'brochure-10marla-bahria.jpg', card: { kind: 'calc', title: 'Worked example', rows: [['Covered area (example)', '2,250 sq ft'], ['Grey structure rate', 'PKR 3,200/sq ft']], totalLabel: 'Grey structure estimate', total: 7200000 } },
+   { type: 'card', dur: 5, img: 'bahria-1.jpg', card: { kind: 'calc', title: 'Same house, turnkey', rows: [['Covered area (example)', '2,250 sq ft'], ['Turnkey rate (from)', 'PKR 7,500/sq ft']], totalLabel: 'Turnkey estimate', total: 16875000 } },
+   CTA('Get ==your exact figure==.', 'From your drawings, in an itemised BOQ') ],
+   vo: 'What does a ten marla grey structure really cost? Take two thousand two hundred and fifty square feet. At three thousand two hundred, that is about seventy two lakh. Turnkey, about one crore sixty nine lakh.',
+   caption: 'A worked example: 2,250 sq ft of covered area at our grey structure rate (from PKR 3,200/sq ft) is PKR 7.2 million. Turnkey (from PKR 7,500/sq ft) is about PKR 16.9 million.\n\nThe area is an example; your figure comes from your own drawings. Send us your plot size for an itemised BOQ.' },
+
+ { id: 19, title: 'The document that protects your money', hook: 'Curiosity (watch time)', scenes: [
+   { type: 'clip', dur: 2.6, clip: C(T.paper), text: { at: 'top', h: ['The one document that', '==protects your money==.'], size: 'md' } },
+   { type: 'card', dur: 6.8, clip: C(T.steel), card: { kind: 'boq', title: 'Your BOQ', stampAt: 3.4, stamp: 'FIXED PRICE', rows: [['Steel', 'Grade-60, Mughal / Amreli'], ['Cement', 'Fauji / Bestway / Maple Leaf'], ['Bricks', 'A-grade awwal'], ['Concrete', '1:2:4, vibrated'], ['Tiles', '60×120 porcelain'], ['Fittings', 'Grohe / Porta']] } },
+   CTA('Ask for your ==BOQ before you sign==.', 'Free estimate · miyaardevelopers.com') ],
+   vo: 'This is the one document that protects your money. Every material, named by brand and grade. Once you sign, it becomes a fixed-price contract. Ask for yours before you sign anything.',
+   caption: 'Your BOQ names every material by brand and grade, with quantities from your drawings. Once signed, it becomes a fixed-price contract.\n\nNever start a build without one.' },
+
+ { id: 20, title: 'Calculator vs contract', hook: 'Contrast (comments)', scenes: [
+   { type: 'photo', dur: 2.6, img: 'awt-1.jpg', kb: 'in', text: { at: 'top', h: ['Online calculators give', 'you ==an estimate.=='], size: 'md' } },
+   { type: 'card', dur: 4.2, img: 'awt-1.jpg', card: { kind: 'list', x: 1, title: 'An estimate is not a price', items: ['It moves when steel moves', 'It never names a brand', 'Nobody signs it'] } },
+   { type: 'card', dur: 5, clip: C(T.paper), card: { kind: 'boq', title: 'A signed BOQ', stampAt: 2.2, stamp: 'SIGNED', rows: [['Price', 'Locked in the contract'], ['Materials', 'Named by brand and grade'], ['Handover', 'Date in writing']] } },
+   CTA('Get a ==price==, not a guess.', 'Free estimate · miyaardevelopers.com') ],
+   vo: 'Online calculators give you an estimate. It moves when steel moves, and it never names a brand. A signed BOQ locks the price, the materials and the handover date.',
+   caption: 'Cost calculators are a good start, but an estimate is not a price. Our rates are reviewed against steel and cement prices, then locked in your contract with every material named.\n\nWhat did your calculator say? Tell us below.' },
+
+ { id: 21, title: 'Grade-60 steel, explained', hook: 'Education (saves)', scenes: [
+   { type: 'clip', dur: 2.6, clip: C(T.steel), text: { at: 'top', h: ['What does', '==Grade‑60== steel mean?'], size: 'md' } },
+   { type: 'card', dur: 5.6, clip: C(T.steel), card: { kind: 'list', title: 'Grade-60, in plain words', step: .8, items: ['Minimum yield strength: 60,000 psi', 'It carries your columns, beams and slabs', 'We name the brand: Mughal or Amreli'] } },
+   { type: 'clip', dur: 2.2, clip: C(T.pour), text: { at: 'top', h: ['Checked before ==every pour==.'] } },
+   CTA('Strength you ==can verify==.', 'Brands and grades in your BOQ') ],
+   vo: 'What does Grade-60 steel mean? A minimum yield strength of sixty thousand psi. It carries your columns, beams and slabs. We name the brand in your BOQ and check it before every pour.',
+   caption: 'Grade-60 deformed steel has a minimum yield strength of 60,000 psi. It is what holds up your columns, beams and slabs. We name the brand (Mughal or Amreli) in your BOQ, so you can check it on site.' },
+
+ { id: 22, title: 'What turnkey includes', hook: 'Value (saves)', scenes: [
+   { type: 'clip', dur: 2.6, clip: C(T.tap), text: { at: 'top', h: ['What does ==turnkey==', 'actually include?'] } },
+   { type: 'card', dur: 7, clip: C(T.plaster), card: { kind: 'list', title: 'Named in your turnkey BOQ', step: .7, items: ['Porcelain tiles 60×120 and marble', 'Solid ash wood frames, custom wardrobes', 'High-gloss kitchen, granite or Corian tops', 'Grohe or Porta fittings, glass showers', 'False ceilings with LED profile lights'] } },
+   CTA('Turnkey from ==PKR 7,500/sq ft==.', 'Move-in ready in 8 to 10 months') ],
+   vo: 'What does turnkey actually include? Porcelain tiles and marble. Solid ash wood frames and custom wardrobes. A high-gloss kitchen. Grohe or Porta fittings. Designer ceilings with LED lights.',
+   caption: 'Our turnkey BOQ names: imported Spanish or Italian porcelain tiles (60×120) and marble, solid ash wood frames and custom wardrobes, UV or acrylic high-gloss kitchens with granite or Corian tops, Grohe or Porta fittings with glass shower cabins, and false ceilings with LED profile lights.\n\nTurnkey from PKR 7,500 per sq ft.' },
+
+ { id: 23, title: 'How your house goes up', hook: 'Story (watch time)', scenes: [
+   { type: 'clip', dur: 2.4, clip: C(T.plot), text: { at: 'top', h: ['How your house', '==goes up==.'] } },
+   { type: 'card', dur: 5.4, clip: C(T.grey), card: { kind: 'stages', title: 'Grey structure: 4 to 5 months', step: .9, items: ['Excavation and foundation', 'Columns, beams and slabs', 'Brickwork, floor by floor', 'Grey structure complete'] } },
+   { type: 'card', dur: 5.2, clip: C(T.done), card: { kind: 'stages', title: 'Turnkey: 8 to 10 months', step: .9, items: ['Plaster and paint', 'Tiles and marble', 'Doors, kitchen and fittings', 'Keys in your hand'] } },
+   CTA('Both dates ==in writing==.', 'Free estimate · miyaardevelopers.com') ],
+   vo: 'How your house goes up. Foundation, then columns, beams and slabs. Brickwork, floor by floor: grey structure in four to five months. Then plaster, tiles and fittings. Keys in eight to ten.',
+   caption: 'The stages of a Miyaar build: foundation, frame and slabs, brickwork, then finishing. Grey structure in 4 to 5 months, turnkey in 8 to 10, and both dates are written into the contract.' },
+
+ { id: 24, title: 'Before every pour, 3 checks', hook: 'Trust (saves)', scenes: [
+   { type: 'clip', dur: 2.6, clip: C(T.pour), text: { at: 'top', h: ['Before every pour,', '==we check 3 things.=='], size: 'md' } },
+   { type: 'card', dur: 5.4, clip: C(T.steel), card: { kind: 'list', num: 1, step: .9, title: 'Our pour checklist', items: ['Steel grade and brand match the BOQ', 'Mix ratio 1:2:4, with vibrators', 'Our engineer checks it against the list'] } },
+   { type: 'clip', dur: 2.2, clip: C(T.grey), text: { at: 'top', h: ['Then, ==and only then==, we pour.'], size: 'md' } },
+   CTA('Concrete you ==cannot redo==, done right.', 'Free estimate · miyaardevelopers.com') ],
+   vo: 'Before every concrete pour, we check three things. The steel matches the BOQ. The mix is one-two-four, vibrated. And our engineer checks it all against the list.',
+   caption: 'Concrete is the one part you cannot redo. Before every pour: steel grade and brand checked against the BOQ, a 1:2:4 mix with mechanical vibrators, and our engineer checks everything against the list.' },
 ];
 
 const posts = [
@@ -161,6 +226,15 @@ const posts = [
  { id: 13, type: 'photo', img: 'uet-residence.jpg', text: { at: 'bottom', h: ['The final bill', '==matches the quote.=='], sub: 'Fixed-price contract. Handover date in writing.' }, caption: 'The number you sign is the number you pay.' },
  { id: 14, type: 'photo', img: 'brochure-10marla-johar.jpg', text: { at: 'bottom', h: ['10 styles.', '==5 marla to 2 kanal.=='], sub: 'Which style would you build? Comment below.' }, caption: 'Which style would you build?' },
  { id: 15, type: 'cta', img: 'hero-dha-residence.jpg', h: 'Booking ==2026 build slots==', sub: 'Free estimate · miyaardevelopers.com', caption: 'Now booking 2026 build slots. WhatsApp +92 300 4008598.' },
+
+ { id: 16, type: 'phone', dur: 8, chat: 'Miyaar site updates', note: 'Example update. Weekly site video on WhatsApp.', msgs: [ { at: 0, clip: C(T.pour), text: 'Week 7: roof slab poured, checked against the BOQ', time: 'Fri 6:04 PM' }, { at: 0, me: 1, text: 'Looks solid. Ammi will visit on Sunday.', time: 'Fri 9:12 PM' } ], caption: 'Your weekly site update, straight to WhatsApp. (Example shown.)' },
+ { id: 17, type: 'card', img: 'brochure-10marla-bahria.jpg', card: { kind: 'calc', title: '10 marla, worked example', rows: [['Covered area (example)', '2,250 sq ft'], ['Grey structure rate', 'PKR 3,200/sq ft']], totalLabel: 'Grey structure estimate', total: 7200000 }, caption: 'Worked example: 2,250 sq ft at PKR 3,200/sq ft. Your figure comes from your drawings.' },
+ { id: 18, type: 'card', clip: C(T.steel), dur: 3, card: { kind: 'boq', title: 'Your BOQ', stampAt: 0, stamp: 'FIXED PRICE', rows: [['Steel', 'Grade-60, Mughal / Amreli'], ['Cement', 'Fauji / Bestway / Maple Leaf'], ['Bricks', 'A-grade awwal'], ['Concrete', '1:2:4, vibrated'], ['Fittings', 'Grohe / Porta']] }, caption: 'The one document that protects your money.' },
+ { id: 19, type: 'card', img: 'awt-1.jpg', card: { kind: 'boq', title: 'Calculator vs contract', stampAt: 0, stamp: 'SIGNED', rows: [['Calculator', 'An estimate that moves'], ['Signed BOQ', 'A price locked in writing'], ['Materials', 'Named by brand and grade'], ['Handover', 'Date in writing']] }, caption: 'Get a price, not a guess.' },
+ { id: 20, type: 'card', clip: C(T.steel), dur: 3, card: { kind: 'list', title: 'Grade-60 steel, in plain words', items: ['Minimum yield strength: 60,000 psi', 'Carries your columns, beams and slabs', 'Brand named in your BOQ'] }, caption: 'What Grade-60 steel means.' },
+ { id: 21, type: 'card', clip: C(T.tap), dur: 3, card: { kind: 'list', title: 'What turnkey includes', items: ['Porcelain tiles 60×120 and marble', 'Solid ash wood frames, wardrobes', 'High-gloss kitchen, granite tops', 'Grohe or Porta fittings', 'LED profile false ceilings'] }, caption: 'Turnkey from PKR 7,500 per sq ft, every item named.' },
+ { id: 22, type: 'card', clip: C(T.grey), dur: 3, card: { kind: 'stages', title: 'Grey structure: 4 to 5 months', items: ['Excavation and foundation', 'Columns, beams and slabs', 'Brickwork, floor by floor', 'Grey structure complete'] }, caption: 'How your house goes up.' },
+ { id: 23, type: 'card', clip: C(T.pour), dur: 3, card: { kind: 'list', num: 1, title: 'Before every pour', items: ['Steel matches the BOQ', 'Mix 1:2:4, vibrated', 'Engineer checks the list'] }, caption: 'Our three checks before every concrete pour.' },
 ];
 for (const p of posts) p.tags = TAGS;
 for (const r of reels) r.tags = TAGS;

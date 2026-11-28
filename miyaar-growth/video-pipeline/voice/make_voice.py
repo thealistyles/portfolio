@@ -6,7 +6,7 @@ sys.stdout.reconfigure(line_buffering=True)
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent; OUT = ROOT / 'out'; MOUTH = ROOT / 'voice' / 'mouth.py'
 ap = argparse.ArgumentParser(); ap.add_argument('--voice', default='af_heart'); ap.add_argument('--speed', type=float, default=1.05)
-ap.add_argument('--only'); a = ap.parse_args()
+ap.add_argument('--only'); ap.add_argument('--music', default=str(Path(__file__).resolve().parent.parent / 'assets' / 'bed.wav')); ap.add_argument('--music-db', default='-22'); a = ap.parse_args()
 data = json.loads(subprocess.run(['node', '-e', "const c=require('./content/reels.cjs');console.log(JSON.stringify(c))"], cwd=ROOT, capture_output=True, text=True, check=True).stdout)
 only = {int(x) for x in a.only.split(',')} if a.only else None
 (OUT / 'voice').mkdir(parents=True, exist_ok=True); (OUT / 'final').mkdir(exist_ok=True)
@@ -28,7 +28,8 @@ for r in data['reels']:
         subprocess.run(['node', 'render.cjs', 'reels', '--only', str(r['id'])], cwd=ROOT, check=True, capture_output=True)
         vd = dur(video)
     heard = ' '.join(w['text'] for w in meta.get('words', []))
-    subprocess.run([sys.executable, str(MOUTH), 'mix', str(video), str(wav), str(OUT / 'final' / f'reel-{n}.mp4'), '--offset', '0.3'], check=True, capture_output=True)
+    mus = ['--music', a.music, '--music-db', a.music_db] if a.music and Path(a.music).exists() else []
+    subprocess.run([sys.executable, str(MOUTH), 'mix', str(video), str(wav), str(OUT / 'final' / f'reel-{n}.mp4'), '--offset', '0.3', *mus], check=True, capture_output=True)
     print(f"reel {n}: video {vd:.1f}s voice {meta['duration']:.1f}s speed {speed:.2f}\n  heard: {heard}")
 lines = []
 for kind in ('reels', 'posts'):
