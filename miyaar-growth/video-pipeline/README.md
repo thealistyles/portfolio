@@ -29,7 +29,7 @@ Needs Node with Playwright, Python 3, and ffmpeg. The first voice run downloads 
 2. **`content/reels.cjs`** holds every reel as a list of scenes, plus its voiceover script, caption and hashtags. Edit this file to make new reels.
 3. **`render.cjs`** opens `engine/studio.html` in headless Chromium, steps through each reel frame by frame at 30 fps, and pipes the frames to ffmpeg. Clip scenes pull their frames from the plot-to-keys film.
 4. **`voice/make_music.py`** generates an original, copyright-free music bed (`assets/bed.wav`: an A-minor pad, bass, light drums and an arpeggio at 96 BPM). The mix ducks it under the voice.
-5. **`voice/make_voice.py`** reads each script with Kokoro (`voice/mouth.py`, from the `mouth` skill). If a voice runs longer than its video, it speeds it up just enough, up to 1.25×. Then it mixes the voice in at -14 LUFS and writes `captions.txt`.
+5. **`voice/make_voice.py`** reads each script with Kokoro (`voice/mouth.py`, from the `mouth` skill). It uses `voice/lexicon.json` to fix how local terms are pronounced (BOQ, DHA, kanal and others) and checks every voice with a transcript. If a voice runs longer than its video, it lengthens that reel's end card (recorded in `out/fit.json`) and re-renders the reel, so the voice stays at a natural pace. Then it mixes in the voice and the music bed at -14 LUFS and writes `captions.txt`.
 
 ## Scene types (in `content/reels.cjs`)
 
